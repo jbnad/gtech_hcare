@@ -1,0 +1,47 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"/></script> 
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script>
+	$(document).ready(function() 
+	{
+
+	var availableTags = [
+      "Neisseria meningitidis serogroup",
+      "Immune Globulin (Human) 180 UNT/ML",
+      "Hepatitis B Surface Antigen Vaccine",
+      "Streptococcus pneumoniae serotype 14 capsular antigen diphtheria",
+      "L1 protein, Human papillomavirus type 11 Vaccine",
+      "Haemophilus influenzae b, capsular polysaccharide inactivated tetanus toxoid conjugate vaccine",]
+    $( "#medid" ).autocomplete({
+      source: availableTags
+    });
+
+	$('#myForm').submit(function(e){
+		var med_name = $('#med_name')
+		$.ajax({
+                     type:"POST",
+                     url: "process_data",
+                     data : $("#myForm").serialize(),
+                     success: function(the_response){
+                         $('#write_response').html(the_response)
+                     }
+		})
+		e.preventDefault();
+	}
+
+	)
+})
+
+</script>
+</head>
+
+
+<form id="myForm" method="post">
+	Medication: <input type="text" name="med" id="medid"><br>
+  	<input type="submit" value="Submit">
+</form>
+<div id="write_response"></div>
+
+</html>
